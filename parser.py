@@ -8,16 +8,14 @@ class Parser:
 
     def get_html(self, url):
         response = self.request.simple_get(url)
-        if response is not None:
-            return BeautifulSoup(response, "html.parser")
-        else:
-            print("Response error")
+        return BeautifulSoup(response.text, "lxml")
 
     def parse_html(self, url):
-        html = self.get_html(url)
-        university_divs = (html.find_all(class_ = "panel panel-primary", href = True))
+        soup = self.get_html(url)
+        university_divs = (soup.find_all(class_="panel panel-primary"))
         for div in university_divs:
-            a = div.select("a")
-            print(a)
+            a = div.find("a")
+            #print(a)
+            print(a.attrs["href"])
         #print(html)
 
