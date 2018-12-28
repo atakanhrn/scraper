@@ -17,11 +17,16 @@ class Parser:
     def parse_html(self, url):
         soup = self.get_html(url)
         university_divs = (soup.find_all(class_="panel panel-primary"))
+        university_links = []
+        average_nets_link = ""
         for div in university_divs:
             a = div.find("a")
-            # todo: concetanate with base url and send request to related links -> last student's order
-            # todo: from last element, get average nets
-            # todo: find relation between nets and orders and plot
+            if university_divs.index(div) < (len(university_divs) - 1):
+                university_links.append(UNIVERSITY_BASE_URL + a.attrs["href"])  ## except last element
+            else:       ##last element
+                average_nets_link = UNIVERSITY_BASE_URL + a.attrs["href"]
+
+
             #print(a.attrs["href"])
-        #print(html)
+        return university_links, average_nets_link
 
