@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 from request import Request
 from selenium import webdriver
-from read_json import read_json
+from read import read_json
 import time
 
 UNIVERSITY_LIST_URL = "https://yokatlas.yok.gov.tr/2017/lisans-bolum.php?b=10024"
@@ -70,6 +70,8 @@ class Parser:
         for d in data:
             if d["il"] == city:
                 return d["bolge"]
+
+                
     def get_quota(self, soup):
         quota_table_div = (soup.find(id="icerik_1000_1"))
         quota_table_rows = quota_table_div.find_all(class_="text-center")
@@ -86,9 +88,3 @@ class Parser:
         city = self.get_city(soup)
         region = self.get_region(city)
         return average_net, order, region, quota
-
-
-
-
-
-
